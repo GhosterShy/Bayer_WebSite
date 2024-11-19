@@ -1,0 +1,74 @@
+{% load static %}
+{% csrf_token %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Registration</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+         <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href={% static 'registrationCSS.css' %}>
+    </head>
+
+    <body>
+            <div class="container1">
+                <div class="row">
+
+                  <div class="col col1">
+
+                        <img class="imghuman" style="max-width: 600px;padding-top: 60px;min-width: 200px; min-height: auto;" src={% static 'img/Registrationimg.png' %}>
+
+
+                  </div>
+
+
+                  <div class="col col2">
+                    <div class="right">
+
+                        <form method="post">
+                            {% csrf_token %}
+
+
+                        <h2>Войти в аккаунт</h2>
+
+
+                        <div class="form-group">
+                            <label for="full-name"> Имя пользователя</label>
+                           {{ form.username}}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Пароль</label>
+                            {{ form.password }}
+                        </div>
+
+
+                            
+                        {{ form.errors }}
+                        <div class="btnsingup">
+                        <button type="submit" class="sign-up">Sign Up</button>
+                        </div>
+                             </form>
+                        <div class="linksignin">
+                        <h3>У вас уже есть аккаунт?</h3>
+                        <a href={% url 'Registration' %} class="sign-in"> Sign Up</a>
+                        </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+    </body>
+</html>

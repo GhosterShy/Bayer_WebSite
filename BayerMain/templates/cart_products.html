@@ -1,0 +1,41 @@
+{% load static %}
+{% csrf_token %}
+
+<ul class="products" id="cart-products">
+
+                {% if not cartItems%}
+                        <h4 style="text-align: center;padding-top: 50px;color: #69cc3e">Корзина пустая</h4>
+                    {% endif %}
+
+            {% for cartItem in cartItems %}
+                <li class="product">
+                    <a href="#" class="product-link">
+                        <span class="product-image">
+                            <img src="{{ MEDIA_URL }}{{ cartItem.product.image.url }}">
+                        </span>
+                        <span class="product-details">
+                            <h3>{{ cartItem.product.name }}</h3>
+                            <span class="qty-price">
+                                <span class="qte">
+                                     <button hx-get="{% url 'minus_card' cartItem.product.id %}" hx-target="#cart-products" type="button" class="minus-button" id="minus-button-1">-</button>
+                                    <span style="padding-left: 10px;padding-right: 10px;color: white">{{ cartItem.quantity }}</span>
+                                    <button hx-get="{% url 'plus_card' cartItem.product.id %}" hx-target="#cart-products" type="button" class="plus-button">+</button>
+                                    <span style="padding-left: 10px;padding-right: 10px;color: white">{{ cartItem.product.price }}₸</span>
+                                </span>
+                                <span style="font-size: 20px;bottom: 5px" class="price" class="price">{{ cartItem.sumtotal }}₸</span>
+                            </span>
+                        </span>
+                    </a>
+                    <a style="color: black" class="remove-button" href="{% url 'delete_card' cartItem.product.id %}" hx-get="{% url 'delete_card' cartItem.product.id %}" hx-target="#cart-products"><i class="bi bi-trash"></i></a>
+                </li>
+            {% endfor %}
+
+            </ul>
+            <div class="totals">
+                <div class="subtotal">
+                    <span class="label">Цена:</span> <span class="amount">{{ cartUser.total_price }}₸</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <a  href="{% url 'Order_check' %}" class="btn btn-success">Оформление заказа</a>
+            </div>

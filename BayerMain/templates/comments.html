@@ -1,0 +1,5 @@
+{% for mess in messages %}
+    <div class="alert alert-primary m-3" role="alert">
+        <span style="background-color: #d2cd2e;border-radius: 25px" class="p-2 m-3 ">{{ mess.client }}</span>{{ mess.message }}
+    </div>
+{% endfor %}

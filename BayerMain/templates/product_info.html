@@ -1,0 +1,46 @@
+{% extends 'baseIndex.html' %}
+{% load static %}
+{% csrf_token %}
+
+
+{% block content %}
+
+    <main style="margin-top: 50px" class="container">
+        <div style="background-color: #8b6872" class="p-4 product-item text-light rounded-4">
+            <div class="row">
+                <div class="col-md-5">
+                    <img class="w-100 rounded-4" src="{{ MEDIA_URL }}{{ product.image.url }}" alt="{{ product.name }}">
+                </div>
+                <div class="col-md-7">
+                    <h1 class="pb-2">{{ product.name }}</h1>
+                    <span class="btn bg-warning p-2 rounded-3 text-dark fw-bold fs-3" style="cursor:auto;">{{ product.price }}<span>₸/кг</span></span>
+                    <a href="{% url 'add_card' product.id %}"><button class="btn bg-primary ms-3 px-3 fs-3"><i class="bi bi-cart-plus"></i></button></a>
+                    <p class="fs-5 pt-3">{{ product.description }}</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+
+
+<div style="margin-top: 50px">
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.message}}
+    <button  class="btn btn-success m-3 " type="submit">Отправить сообщение</button>
+</form>
+</div>
+
+
+    <div id="comments">
+    {% for mess in messages %}
+    <div class="alert alert-primary m-3" role="alert">
+        <span style="background-color: #d2cd2e;border-radius: 25px" class="p-2 m-3 ">{{ mess.client }}</span>{{ mess.message }}
+    </div>
+    {% endfor %}
+    </div>
+
+{% endblock %}

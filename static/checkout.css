@@ -1,0 +1,47 @@
+
+body {
+    font-family: Montserrat;
+    padding-top:  75px;
+    padding-bottom: 20px;
+}
+main {
+    overflow-x: hidden;
+}
+nav {
+    background-color: #fff;
+}
+.right {
+    width: 54%;
+}
+.left {
+    width: 43%;
+}
+.content {
+    display: none;
+}
+.commentary {
+    height: 120px;
+}
+.samovyzov:checked + label + .content { display: block; }
+.productName {
+    width: 25%;
+}
+
+@media (max-width: 480px) {
+    h1 {
+        text-align: center;
+    }
+    .right-left {
+        flex-direction: column;
+    }
+    .right {
+        width: 100%;
+        padding-bottom: 15px;
+    }
+    .left {
+        width: 100%;
+    }
+    .productName {
+        width: 35%;
+    }
+}

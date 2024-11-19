@@ -1,0 +1,244 @@
+span.count {
+    color: #fff;
+    background: #FFBA00;
+    margin-left: 10px;
+    position: relative;
+    top: 6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50px;
+    font-size: 12px;
+    letter-spacing: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+ul.products {
+    margin: 0;
+    padding: 0 0 5px 0;
+    list-style: none;
+    height: calc(100vh - 200px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: block;
+    position: relative;
+    z-index: 0;
+
+    li.product {
+        margin: 0 0 10px 0;
+        padding: 0;
+        width: 100%;
+        min-height: 30px;
+        /*background: lighten(#6D9773, 60%);*/
+        background-color: #6D9773;
+        border-radius: 3px;
+        color: #98989b;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-flow: row nowrap;
+        transition: all 0.5s linear;
+
+        a.product-link {
+            width: 100%;
+            color: #354165;
+            padding: 5px;
+            margin: 0;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
+            span.product-image {
+                display: inline-block;
+                width: 90px;
+                height: 50px;
+                padding-right: 10px;
+
+                img {
+                    width: 80px;
+                    
+                    border: 1px solid #d7d7de;
+                    transition: all 0.5s linear;
+                }
+            }
+
+            span.product-details {
+                display: inline-block;
+                width: 100%;
+                min-height: 30px;
+                color: #75757a;
+
+                h3 {
+                    margin: 3px 25px 5px 0;
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: #fff;
+                    transition: all 0.5s linear;
+                }
+
+                span.qty-price {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: nowrap;
+                    align-content: center;
+                    align-items: center;
+                    justify-content: space-between;
+                    width: 100%;
+                    position: relative;
+                    z-index: 5;
+                    margin-top: 8px;
+                    
+                    span.qte,
+                    span.price {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: nowrap;
+                    }
+                    
+                    span.qte {
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: nowrap;
+                        align-content: center;
+                        align-items: center;
+                        justify-content: flex-start;
+
+                        a.a_buttom{
+                        }
+                            button.minus-button,
+                            button.plus-button {
+                                width: 25px;
+                                height: 24px;
+                                border-radius: 3px;
+                                border: 1px solid #cdcdd1;
+                                background: #f0f0f9;
+                                color: #75757a;
+                                font-size: 18px;
+                                text-align: center;
+                                vertical-align: middle;
+                                line-height: 20px;
+                                transition: all 0.3s linear;
+
+
+                                &:focus {
+                                    outline: none;
+                                }
+                        }
+                        
+                        input.qty-input {
+                            width: 24px;
+                            height: 24px;
+                            text-align: center;
+                            border: 1px solid #cdcdd1;
+                            border-radius: 3px;
+                            margin: 0 2px;
+                            transition: all 0.5s linear;
+                            
+                            
+                            &:focus {
+                                outline: none;
+                                border: 1px solid #4dc0e3;
+                            }
+                            
+                            &::-webkit-inner-spin-button,
+                            &::-webkit-outer-spin-button {
+                                appearance: none;
+                                margin: 0;
+                            }
+                        }
+                    }
+
+                    span.price {
+                        color: #fff;
+                        font-weight: 500;
+                        font-size: 13px;
+                        display: inline-flex;
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+    a.remove-button {
+        height: 16px;
+        width: 16px;
+        margin: 10px 10px 0 0;
+        text-decoration: none;
+        position: absolute;
+        top: 2px;
+        right: 0;
+        z-index: 2;
+        display: flex;
+        &:hover {
+            color: red;
+        }
+    }
+
+
+                        span.price {
+                        color: #fff;
+                        font-weight: 500;
+                        font-size: 13px;
+                        display: inline-flex;
+                    }
+}
+
+div.totals {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    height: 45px;
+    background: #e1e1e7;
+    border-bottom: 1px solid #d7d7de;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    
+    div.subtotal,
+    div.shipping,
+    div.tax {
+        padding: 15px;
+        text-align: center;
+        color: #44444a;
+        border-bottom: 1px solid #d7d7de;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 14px;
+        font-weight: 400;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+
+        span.amount {
+            color: darken(#4dc0e3, 15%);
+            margin-left: 10px;
+            font-weight: 600;
+        }
+    }
+}
+
+div.action-buttons {
+    padding: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 80px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+
+    button {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,140 @@
+.home {
+    padding-top: 50px;
+}
+p{
+    color: #716f6f;
+}
+.container {
+}
+.home-content {
+}
+.row {
+}
+.col-8 {
+
+}
+.upload-drop-zone {
+background: url("c:\Users\VICTUS\Downloads\DALL·E 2024-11-15 04.27.04 - A clean and minimalistic file upload interface background, with overlapping file icons in the center. The background uses a light gradient with soft w.webp");
+}
+
+.drop-zone-title {
+    padding-top: 108px;
+}
+.drop-zone-text {
+}
+.drop-zone-input {
+}
+.custom-file-label {
+}
+.file-input {
+}
+.file-name {
+}
+.upload-section-link {
+    padding-top: 20px;
+}
+.upload-text{
+    text-align: center;
+}
+.link-container {
+}
+.link-input {
+}
+.link-submit {
+}
+.col-4 {
+}
+.form-group-category {
+    padding-top: 20px;
+}
+.group-title {
+    font-style: italic;
+}
+.form-group {
+    padding-top: 10px;
+}
+.form-label {
+}
+.form-control {
+}
+.invalid-tooltip {
+}
+.form-select {
+}
+/* Скрываем стандартное поле для выбора файла */
+.file-input {
+    display: none;
+}
+
+/* Стили для кнопки */
+.custom-file-label {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Стили при наведении */
+.custom-file-label:hover {
+    background-color: #0056b3;
+}
+
+/* Зона для перетаскивания */
+.drop-zone {
+    border: 2px dashed #007bff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+    cursor: pointer;
+    width: 400px;
+    height: 500px;
+    border-radius: 10px;
+}
+
+/* Стили при наведении на зону для перетаскивания */
+.drop-zone.hover {
+    background-color: #e9f5ff;
+}
+
+/* Текст для отображения выбранного файла */
+.file-name {
+    margin-left: 10px;
+    font-style: italic;
+}
+
+
+/* Стиль для контейнера ссылки */
+.link-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 10px;
+    
+}
+
+/* Стиль для поля ввода ссылки */
+.link-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 8px;
+    font-size: 16px;
+}
+
+/* Стиль для кнопки отправки ссылки */
+.link-submit {
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 8px;
+    cursor: pointer;
+    color: #007bff;
+    font-size: 16px;
+}
