@@ -58,10 +58,17 @@
                         <button type="submit" class="sign-up">Sign Up</button>
                         </div>
                              </form>
+
+
                         <div class="linksignin">
                         <h3>У вас уже есть аккаунт?</h3>
                         <a href={% url 'Registration' %} class="sign-in"> Sign Up</a>
+                            {% csrf_token %}
                         </div>
+
+                         <span class="linksignin">
+                        <a href={% url 'password_reset' %} class="sign-in">Забыли пароль?</a>
+                             </span>
 
                     </div>
                   </div>

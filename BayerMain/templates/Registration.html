@@ -1,4 +1,5 @@
 {% load static %}
+{% csrf_token %}
 <!doctype html>
 <html lang="en">
     <head>
@@ -20,6 +21,7 @@
     </head>
 
     <body>
+
 
             <div class="container1">
                 <div class="row">
@@ -50,7 +52,7 @@
 
 
                             </div>
-                           
+
                         </div>
                         <div class="form-group">
                             <label for="email">Email Address</label>
@@ -99,5 +101,19 @@
 
 
 
+    <style>
+    @font-face {
+    font-family: 'Montserrat';
+    src: url('{% static 'fonts/montserrat/static/Montserrat-Regular.ttf' %}');
+    }
+
+    @font-face {
+    font-family: 'Montserrat-bold';
+    src: url('{% static 'fonts/montserrat/static/Montserrat-Bold.ttf' %}');
+    }
+
+</style>
     </body>
+
+
 </html>

@@ -32,21 +32,21 @@
                 <div class="carousel-inner rounded-4" role="listbox">
                     <div class="carousel-item active">
                         <img
-                            src="{% static 'img/Carusel/image 2.png' %}"
+                            src="{% static 'Banner/Banner1.jpg' %}"
                             class="w-100 d-block"
                             alt="First slide"
                         />
                     </div>
                     <div class="carousel-item">
                         <img
-                            src="{% static 'img/Carusel/image 2.png' %}"
+                            src="{% static 'Banner/Banner2.jpg' %}"
                             class="w-100 d-block"
                             alt="Second slide"
                         />
                     </div>
                     <div class="carousel-item">
                         <img
-                            src="{% static 'img/Carusel/image 2.png' %}"
+                            src="{% static 'Banner/Banner3jpg.jpg' %}"
                             class="w-100 d-block"
                             alt="Third slide"/>
                     </div>
@@ -88,6 +88,53 @@
             </a>
         {% endfor %}
         </div>
+
+
+
+
+    <div style="font-family: Montserrat-bold" class="category-title d-flex py-4 gap-3 align-items-center">
+            ПРОДУКТЫ
+            <div></div>
+    </div>
+
+
+       <div class="row  d-flex justify-content-center">
+           {% for product in products %}
+               <div class="col">
+            <div class="card">
+                <a href="{% url 'product_info' product.id %}"><img  style="object-fit: cover" src="{{ MEDIA_URL }}{{ product.image.url }}" class="card-img-top" alt="..."></a>
+              <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.price }}T/кг</p>
+                <a href="{% url 'add_card' product.id %}" class="btn btn-primary col-12"><i class="bi bi-cart-plus"></i></a>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+       </div>
+
+<style>
+
+    @media (min-width: 480px) {
+        .card{
+            width: 20rem;
+            margin-bottom: 10px;
+        }
+     .card-img-top{
+        height: 250px;
+        }
+    }
+    @media (max-width:480px) {
+        .card{
+            width: 10rem;
+            margin-bottom: 10px;
+        }
+     .card-img-top{
+        height: 100px;
+    }
+}
+</style>
+
 
 
 

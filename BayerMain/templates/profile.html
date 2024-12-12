@@ -1,0 +1,45 @@
+{% load static %}
+{% csrf_token %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/project01.css' %}">
+    <link rel="stylesheet" href="{% static 'css/project01media.css'%}">
+    <link rel="stylesheet" href="{% static 'css/profile.css'%}">
+
+    <title>Profile</title>
+</head>
+<body class="profile-body">
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="mb-3">
+    {{ form.image }}
+    </div>
+    <button type="submit">Сохранить</button>
+</form>
+
+
+    <div class="profile-img"><img src="{{ MEDIA_URL }}{{ img.image.url }}"></div>
+    <div class="profile-info">
+        <span>{{ user.username }}</span>
+        <span>{{ user.email }}</span>
+    </div>
+    <h3>Мои заказы</h3>
+
+    {% for foo in  Orderuser %}
+    <span class="profile-orders">Заказ №{{ foo.id }} Статус: {{ foo.status }}</span>
+     {% endfor %}
+
+    <h3>Адрес доставки</h3>
+    <input type="text" value="Город, улица, дом, квартира" readonly>
+    <button>Изменить адрес</button>
+
+
+
+</body>
+</html>

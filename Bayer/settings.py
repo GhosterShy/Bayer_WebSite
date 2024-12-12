@@ -128,10 +128,13 @@ LOGIN_URL = 'Registration'
 LOGOUT_REDIRECT_URL = 'Registration'
 
 
+
+
+
+
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = ['https://4f13-176-64-25-30.ngrok-free.app']
-
+CSRF_TRUSTED_ORIGINS = ['https://dc0f-82-200-150-130.ngrok-free.app']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

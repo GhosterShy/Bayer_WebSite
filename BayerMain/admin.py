@@ -1,7 +1,7 @@
 from django.contrib import admin
 # admin.py
 from django.contrib import admin
-from .models import Role, Product, Cart, CartItem, Order, OrderItem, Delivery,Category,Feedback
+from .models import Role, Product, Cart, CartItem, Order, OrderItem, Delivery, Category, Feedback, Sales, productSales, imageUser, location
 
 # Регистрируем модель ролей
 @admin.register(Role)
@@ -10,6 +10,18 @@ class RoleAdmin(admin.ModelAdmin):
     list_filter = ('role',)
     search_fields = ('user__username',)
 
+
+@admin.register(imageUser)
+class ImageUserAdmin(admin.ModelAdmin):
+    list_display = ('user',)
+    list_filter = ('user',)
+    search_fields = ('user',)
+
+@admin.register(location)
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ('location',)
+    list_filter = ('user',)
+    search_fields =('user',)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -26,6 +38,20 @@ class ProductAdmin(admin.ModelAdmin):
     list_filter = ('category', 'seller__username')
 
 
+
+@admin.register(Sales)
+class SalesAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    search_fields = ('name',)
+    list_filter = ('name',)
+
+
+
+@admin.register(productSales)
+class ProductSalesAdmin(admin.ModelAdmin):
+    list_display = ('sales',)
+    search_fields = ('product',)
+    list_filter = ('sales',)
 
 @admin.register(Feedback)
 class FeedbackAdmin(admin.ModelAdmin):
@@ -50,7 +76,7 @@ class CartItemAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user', 'total_price', 'status', 'payment_method', 'created_at')
+    list_display = ('user', 'total_price', 'status', 'payment_method', 'created_at', 'location')
     list_filter = ('status', 'payment_method')
     search_fields = ('user__username', 'cart__id')
 

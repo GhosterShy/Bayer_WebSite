@@ -1,3 +1,5 @@
+import time
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -9,6 +11,17 @@ class Role(models.Model):
     )
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+
+
+class imageUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, related_name='profile_image')
+    image = models.ImageField(upload_to='static/logoUser', null=True, blank=True, default='static/img-profile/deanwinchester.jpg')
+
+
+class location(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    location = models.CharField(max_length=150, null=True, blank=True, default='none')
 
 
 
@@ -30,6 +43,7 @@ class Product(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     description = models.TextField()
+    quantity = models.IntegerField(null=True, default=0)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='products')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products', null=True)
@@ -38,6 +52,17 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+
+class Sales(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255,default="Sale")
+    image = models.ImageField(upload_to='static/sales', null=True)
+
+
+class productSales(models.Model):
+    id = models.AutoField(primary_key=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='productSales')
+    sales = models.ForeignKey(Sales, on_delete=models.CASCADE, related_name='sales')
 
 
 
@@ -74,15 +99,18 @@ class Order(models.Model):
         ('selfcoll', 'Cамовызов'),
     )
 
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     cart = models.OneToOneField(Cart, on_delete=models.CASCADE, null=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.CharField(max_length=50, default='Open')
     payment_method = models.CharField(max_length=50, choices= METHOD_CHOICES)
     method_obtaining = models.CharField(max_length=50, choices=METHOD_OBTAINING_CHOICES, default='selfcoll')
+    location = models.CharField(max_length=50, null=True, default='Неизвестно')
     created_at = models.DateTimeField(auto_now_add=True)
 
 class OrderItem(models.Model):
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name='seller', default=None)
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField()

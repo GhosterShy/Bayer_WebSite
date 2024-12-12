@@ -86,10 +86,38 @@
 
 
                         {% endfor %}
-
-
-
                       </div>
+
+                <div class="row bg-light p-4 rounded border mb-2">
+
+
+                    <div class="row bg-light p-4 rounded border mb-2">
+                    <h4>Адрес</h4>
+
+
+                        <input type="radio" name="method_ji" value="default" class="btn btn-check samovyzov" id="type2" required="">
+                        <label class="btn btn-outline-primary mb-2 w-100" for="type2">Адрес по умолчанию</label>
+
+                        <input type="radio" name="method_ji" value="address" class="btn btn-check samovyzov" id="type3" required="">
+                        <label class="btn btn-outline-primary mb-2 w-100" for="type3">Вести адрес доставки</label>
+
+                        {% if 'address' %}
+                        <div class="content pb-2">
+                            Адрес доставки
+
+                       {{ form.location }}
+
+                        </div>
+                        {% endif %}
+
+
+
+
+                    </div>
+                </div>
+
+                {{ form.errors }}
+
                 <div class="row bg-light p-4 rounded border mb-2">
                 <button type="submit" class="btn btn-primary">Заказать</button>
                 </div>
@@ -126,7 +154,7 @@
 
 
                         </span>
-            {% endfor %}
+                        {% endfor %}
 
                 </div>
                 <div class="row bg-light p-4 rounded border mb-2">

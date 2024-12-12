@@ -1,0 +1,65 @@
+{% load static %}
+{% csrf_token %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOG</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/log-up-in.css' %}">
+</head>
+<body class="body-log">
+    <div class="main">
+        <div class="img-log">
+            <img src="{% static 'img-other/welcome.png' %}">
+            <a href="{% url 'Registration' %}"><button class="log-up">Sign Up</button></a> <!--onclick="signUp()"-->
+            <a href="{% url 'Login' %}"><button class="log-in">Sign In</button></a> <!--onclick="signIn()"-->
+        </div>
+    </div>
+
+
+    <div class="sign-up">
+        <h1>Create account</h1>
+        <form action="#" method="GET">
+            <input type="text" name="username" placeholder="Username" class="username">
+            <input type="text" name="firstname" placeholder="First name">
+            <input type="text" name="lastname" placeholder="Last name">
+            <input type="email" name="email" placeholder="Email">
+            <input type="password" name="password" placeholder="Password">
+            <input type="radio" id="seller" name="type" value="seller">
+            <label for="seller">Seller</label>
+            <input type="radio" id="client" name="type" value="client">
+            <label for="client">Client</label>
+            <button type="submit">Sign Up</button>
+        </form>
+        <span>Уже есть аккаунта? <span style="cursor: pointer; color: deepskyblue; font-weight: 600;" onclick="signIn()">Войти</span></span>
+    </div>
+
+
+    <div class="sign-in">
+        <h1>Sign In</h1>
+        <form action="#">
+            <input type="text" placeholder="Username" class="username">
+            <input type="password" placeholder="Password">
+            <button>Sign In</button>
+        </form>
+        <span>Нет аккаунта? <span style="cursor: pointer; color: deepskyblue; font-weight: 600;" onclick="signUp()">Создать</span></span>
+    </div>
+
+<style>
+    @font-face {
+    font-family: 'Montserrat';
+    src: url('{% static 'fonts/montserrat/static/Montserrat-Regular.ttf' %}');
+    }
+
+    @font-face {
+    font-family: 'Montserrat-bold';
+    src: url('{% static 'fonts/montserrat/static/Montserrat-Bold.ttf' %}');
+    }
+
+</style>
+
+</body>
+<script src="{% static 'javascript/sign-up-in.js' %}"></script>
+</html>

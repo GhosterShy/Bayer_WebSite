@@ -1,11 +1,15 @@
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.views import LoginView, PasswordChangeView, PasswordResetView, PasswordResetConfirmView
+from django.contrib.messages.views import SuccessMessageMixin
+
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.views.generic import UpdateView, ListView
 
-from BayerMain.models import Role, Product, Category, Cart, CartItem,Feedback,Order
+from BayerMain.models import Role, Product, Category, Cart, CartItem, Feedback, Order, OrderItem, Sales, productSales, imageUser, location
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate
-from .forms import UserForm, LoginForm, addProductForm, add_Feedback, Order_check
+from .forms import UserForm, LoginForm, addProductForm, add_Feedback, Order_check, changeLogoForm, UserForgotPasswordForm, UserSetNewPasswordForm
 
 
 def Registration(request):
@@ -43,7 +47,94 @@ class LoginUser(LoginView):
         if userrole == "customer":
             return reverse_lazy('Home')
         elif userrole == "seller":
-            return reverse_lazy('Home')
+            return reverse_lazy('seller')
+
+
+
+def authen(request):
+    return render(request, 'authorization.html')
+
+
+
+
+
+
+
+
+class UserForgotPasswordView(SuccessMessageMixin, PasswordResetView):
+    """
+    Представление по сбросу пароля по почте
+    """
+    form_class = UserForgotPasswordForm
+    template_name = 'changepasswd.html'
+    success_url = reverse_lazy('home')
+    success_message = 'Письмо с инструкцией по восстановлению пароля отправлена на ваш email'
+    subject_template_name = 'system/email/password_subject_reset_mail.txt'
+    email_template_name = 'system/email/password_reset_mail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Запрос на восстановление пароля'
+        return context
+
+
+class UserPasswordResetConfirmView(SuccessMessageMixin, PasswordResetConfirmView):
+    """
+    Представление установки нового пароля
+    """
+    form_class = UserSetNewPasswordForm
+    template_name = 'changepasswddone.html'
+    success_url = reverse_lazy('home')
+    success_message = 'Пароль успешно изменен. Можете авторизоваться на сайте.'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Установить новый пароль'
+        return context
+
+
+
+
+
+
+
+
+def profile(request):
+    user = request.user
+    img = imageUser.objects.get(user=user)
+    Orderuser = Order.objects.filter(user=user)
+
+    user_profile = imageUser.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = changeLogoForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = changeLogoForm(instance=user_profile)
+
+    return render(request, 'profile.html', context={'img': img, 'user': user, 'Orderuser': Orderuser,'form':form})
+
+
+def changeLogo(request):
+    user_profile = imageUser.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = changeLogoForm(request.POST, request.FILES, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = changeLogoForm(instance=user_profile)
+    return render(request, 'baseIndex.html', {'form': form})
+
+
+
+
+
+class passwdchange(PasswordChangeView):
+    form = PasswordChangeForm
+    success_url = reverse_lazy('#')
+    template_name = 'PasswdChange.html'
 
 
 
@@ -55,16 +146,39 @@ def Home(request):
         return render(request, 'index.html', {'categories': categories})
     else:
         cart = Cart.objects.get_or_create(user=user, status='open')
+        images = imageUser.objects.get_or_create(user=user)
+        locations = location.objects.get_or_create(user=user)
         categories = Category.objects.all()
         cartUser = Cart.objects.get(user=user, status='open')
         cartItems = CartItem.objects.filter(cart=cartUser).all()
+        products = Product.objects.all()
+        sales = Sales.objects.all()
+        productsales = productSales.objects.all()
+        logo = imageUser.objects.get(user=user)
+
+    return render(request, 'indexClient.html', {'categories': categories, 'error': get_object_or_404, 'user': user, 'cartItems': cartItems, 'cartUser': cartUser, 'products': products, 'sales': sales, 'productsales': productsales, 'logo': logo})
 
 
-    return render(request, 'index.html', {'categories': categories, 'error': get_object_or_404, 'user': user, 'cartItems': cartItems, 'cartUser': cartUser})
+
+
+def Search(request):
+    logo = imageUser.objects.get(user=request.user)
+    query = request.GET.get('q', '')
+    results = []
+    if query:
+        results = Product.objects.filter(name__icontains=query)
+    else:
+        results = Product.objects.all()
+    return render(request, 'search.html', {'results': results, 'query': query, 'logo': logo})
+
+
+
+
 
 
 def product_list(request, category_id):
     user = request.user
+    logo = imageUser.objects.get(user=user)
     cart_user = Cart.objects.get(user=user, status='open')
     cart_items = CartItem.objects.filter(cart=cart_user).all()
     cartUser = Cart.objects.get(user=user, status='open')
@@ -78,7 +192,7 @@ def product_list(request, category_id):
 
 
 
-    return render(request, 'products.html', {'products': products, 'category': category, 'cartItems': cart_items, 'cartUser': cartUser})
+    return render(request, 'products.html', {'products': products, 'category': category, 'cartItems': cart_items, 'cartUser': cartUser, 'user': user, 'logo': logo})
 
 
 
@@ -203,7 +317,7 @@ def add_product(request):
             product = form.save(commit=False)
             product.seller = request.user
             product.save()
-            return redirect('Home')
+            return redirect('seller')
     else:
         form = addProductForm()
         return render(request, 'seller/add_product.html', context={'form': form})
@@ -215,8 +329,7 @@ def checkout(request):
     user = request.user
     cart = Cart.objects.get(user=request.user, status='open')
     cart_Item = CartItem.objects.filter(cart=cart).all()
-
-
+    locations = location.objects.get(user=user).location
 
 
     if request.method == 'POST':
@@ -225,18 +338,38 @@ def checkout(request):
             order = form.save(commit=False)
             order.user = request.user
             order.total_price = cart.total_price
+            order.location = locations
             order.cart = cart
             cart.status = 'close'
             cart.save()
             order.save()
+            for item in cart_Item:
+                OrderItem.objects.create(order=order, product=item.product, quantity=item.quantity, seller=item.product.seller)
             return redirect('Home')
 
     else:
         form = Order_check()
+
         return render(request, 'CheckOut.html', context={'cart': cart, 'cart_Item': cart_Item, 'user': user, 'form': form})
 
 
 
+def sellerMain(request):
+    user = request.user
+    logo = imageUser.objects.get(user=user)
+    categories = Category.objects.all()
+    order_items = OrderItem.objects.filter(seller=user).all()
+    products_by_category = {}
+
+    for category in categories:
+        products = Product.objects.filter(seller=user, category=category)
+        if products.exists():
+            products_by_category[category] = products
+
+    return render(request, 'Seller/SellerBase.html', context={'user': user, 'categories': categories, 'products_by_category': products_by_category, 'logo':logo,'order_items': order_items})
 
 
-
+def sellerOrder(request):
+    user = request.user
+    order_items = OrderItem.objects.filter(seller=user).all()
+    return render(request, 'Seller/SellerBase.html', context={'user': user, 'order_items': order_items})

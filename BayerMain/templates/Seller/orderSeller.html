@@ -1,0 +1,23 @@
+{% extends 'Seller/SellerBase.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="container">
+        <h1>Заказы</h1>
+
+
+        {% for orders in order_items %}
+
+            <div style="border-radius: 10px;background-color: #c1e03f" class="w-50 d-flex justify-content-between p-2 m-3">
+            <div class="row-cols-4">
+                <span><span class="m-2" style="font-weight: bolder" >Продукт:</span>{{ orders.product.name }}</span>
+                <span><span class="m-2" style="font-weight: bolder" >Клиент:</span>{{ orders.order.user }}</span>
+                <span><span class="m-2" style="font-weight: bolder" >Количесто:</span>{{ orders.quantity }}</span>
+                <span><span class="m-2" style="font-weight: bolder" >Метод оплаты:</span>{{ orders.order.payment_method }}</span>
+            </div>
+            </div>
+        {% endfor %}
+
+    </main>
+
+{% endblock %}

@@ -1,41 +1,45 @@
 {% load static %}
 {% csrf_token %}
 
-<ul class="products" id="cart-products">
 
-                {% if not cartItems%}
+
+
+
+
+<div class="cart-page-head"><button onclick="closeCart()"><i class="bi bi-arrow-left"></i></button><span><font>{{ cartItems.count }}</font>&nbsp;Корзина</span></div>
+        <div class="cart-page-body">
+
+            {% if not cartItems%}
                         <h4 style="text-align: center;padding-top: 50px;color: #69cc3e">Корзина пустая</h4>
                     {% endif %}
-
             {% for cartItem in cartItems %}
-                <li class="product">
-                    <a href="#" class="product-link">
-                        <span class="product-image">
-                            <img src="{{ MEDIA_URL }}{{ cartItem.product.image.url }}">
-                        </span>
-                        <span class="product-details">
-                            <h3>{{ cartItem.product.name }}</h3>
-                            <span class="qty-price">
-                                <span class="qte">
-                                     <button hx-get="{% url 'minus_card' cartItem.product.id %}" hx-target="#cart-products" type="button" class="minus-button" id="minus-button-1">-</button>
-                                    <span style="padding-left: 10px;padding-right: 10px;color: white">{{ cartItem.quantity }}</span>
-                                    <button hx-get="{% url 'plus_card' cartItem.product.id %}" hx-target="#cart-products" type="button" class="plus-button">+</button>
-                                    <span style="padding-left: 10px;padding-right: 10px;color: white">{{ cartItem.product.price }}₸</span>
-                                </span>
-                                <span style="font-size: 20px;bottom: 5px" class="price" class="price">{{ cartItem.sumtotal }}₸</span>
-                            </span>
-                        </span>
-                    </a>
-                    <a style="color: black" class="remove-button" href="{% url 'delete_card' cartItem.product.id %}" hx-get="{% url 'delete_card' cartItem.product.id %}" hx-target="#cart-products"><i class="bi bi-trash"></i></a>
-                </li>
-            {% endfor %}
 
-            </ul>
-            <div class="totals">
-                <div class="subtotal">
-                    <span class="label">Цена:</span> <span class="amount">{{ cartUser.total_price }}₸</span>
+
+
+
+
+
+
+            <div class="cart-item">
+                <div class="cart-item-img"><img src="{{ MEDIA_URL }}{{ cartItem.product.image.url }}"></div>
+                <div class="cart-item-body">
+                    <p>{{ cartItem.product.name }} </p>
+                    <span>{{ cartItem.product.price }}</span>
+                    <span class="value">{{ cartItem.sumtotal }}</span>
+                </div>
+                <div class="cart-item-count">
+                    <button  hx-get="{% url 'delete_card' cartItem.product.id %}" hx-target="#cart-products">Удалить</button>
+                   <span class="value">{{ cartItem.quantity }}</span>
+                    <div class="plus-minus">
+                        <button hx-get="{% url 'minus_card' cartItem.product.id %}" hx-target="#cart-products" ><i class="bi bi-dash"></i></button>
+                        <button hx-get="{% url 'plus_card' cartItem.product.id %}" hx-target="#cart-products"><i class="bi bi-plus"></i></button>
+                    </div>
                 </div>
             </div>
-            <div class="action-buttons">
-                <a  href="{% url 'Order_check' %}" class="btn btn-success">Оформление заказа</a>
-            </div>
+        {% endfor %}
+
+        </div>
+        <div class="cart-page-foot">
+            <div class="cart-page-total"><p>Цена:&nbsp;</p><span>{{ cartUser.total_price }}</span></div>
+             <a href="{% url 'Order_check' %}"><div class="cart-pay"><button>Оформить заказ</button></div></a>
+        </div>

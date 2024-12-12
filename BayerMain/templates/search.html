@@ -1,0 +1,29 @@
+
+{% load static %}
+
+{% block content %}
+    <div class="title-discounts">
+            <span>Продукты</span>
+        </div>
+<div class="discounts">
+
+            {% for product in results %}
+            <div class="product" onclick="productInCart()">
+                <a href="{%  url 'product_info' product.id %}"><div class="product-img"><img src="{{ MEDIA_URL }}{{ product.image.url }}"></div></a>
+                <div class="product-body">
+                    <span class="product-title">{{ product.name }}</span>
+                    <div>
+                        <span class="product-value">{{ product.quantity }}</span>
+                        <span class="product-price">{{ product.price }}<span>&nbsp;₸</span></span>
+                        <a href="{% url 'add_card' product.id %}"  class="product-cart"><i class="bi bi-cart-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+
+
+            {% endfor %}
+
+
+
+        </div>
+{% endblock %}

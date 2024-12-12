@@ -70,10 +70,35 @@ a {
 .product-item {
     background-color: #8b6872;
 }
+
+ @media (min-width: 480px) {
+        .card{
+            width: 20rem;
+            margin-bottom: 10px;
+        }
+     .card-img-top{
+        height: 250px;
+        }
+    }
+
+
 @media (max-width: 480px) {
+     .card{
+            width: 10rem;
+            margin-bottom: 10px;
+        }
+     .card-img-top{
+        height: 100px;
+    }
     body {
         padding-top: 105px;
     }
+
+    .img_crd{
+        height: 100px;
+    }
+
+
     .search-input {
         width: 100%;
         order: 2;

@@ -1,0 +1,84 @@
+{% extends 'BaseClient.html' %}
+{% load static %}
+{% csrf_token %}
+
+
+
+{% block title %}Главная страница{% endblock %}
+
+{% block content %}
+    <main>
+        <div class="banner">
+            <div class="banner-1">
+                <h1>Фирменный интернет-магазин</h1>
+                <span>Продукты с доставкой на дом</span>
+            </div>
+            <div class="banner-2">
+                <div class="slide-1"><img src="{% static 'Banner/Banner1.jpg' %}"></div>
+                <div class="slide-2"><img src="{% static 'Banner/Banner2.jpg' %}"></div>
+                <div class="slide-3"><img src="{% static 'Banner/Banner3jpg.jpg' %}"></div>
+            </div>
+        </div>
+
+    <span id="search_product">
+        <div class="title-discount">
+            <span>Каталог скидок</span>
+            <font onclick="discountAll()">Смотреть все <i class="bi bi-arrow-right"></i></font>
+        </div>
+        <div class="discount">
+        {% for sale in sales %}
+            <div><img src="{{ MEDIA_URL }}{{ sale.image }}"></div>
+          {% endfor %}
+        </div>
+        <div class="title-category">
+            <span>Категорий продуктов</span>
+        </div>
+        <div class="category-product">
+            {% for category in categories %}
+            <div><a href="{% url 'products' category.id %}"><span>{{ category.name }}</span><img src="{{ MEDIA_URL }}{{ category.image.url }}"><i class="bi bi-arrow-right-short"></i></a></div>
+            {% endfor %}
+
+        </div>
+        <div class="title-discounts">
+            <span>Скидки</span>
+        </div>
+        <div class="discounts">
+
+            {% for productsale in productsales %}
+            <div class="product" onclick="productInCart()">
+                <a href="{%  url 'product_info' productsale.product.id %}"><div class="product-img"><img src="{{ MEDIA_URL }}{{ productsale.product.image }}"></div></a>
+                <div class="product-body">
+                    <span class="product-title">{{ productsale.product.name }}</span>
+                    <div>
+                        <span class="product-value">{{ productsale.product.quantity }}</span>
+                        <span class="product-price">{{ productsale.product.price }}<span>&nbsp;₸</span></span>
+                        <a href="{% url 'add_card' productsale.product.id %}"  class="product-cart"><i class="bi bi-cart-plus"></i></a>
+                    </div>
+                </div>
+            </div>
+
+
+
+            {% endfor %}
+
+
+
+        </div>
+
+        </span>
+
+    </main>
+
+    <div class="header480 fixed-bottom">
+        <a>
+            <audio id="audio" src="{% static 'audio/mem.mp3' %}"></audio>
+            <button id="playAudio"><i class="bi bi-play-fill"></i></button>
+        </a>
+        <a href="seller.html"><i class="bi bi-file-earmark-fill"></i></a>
+        <a href="#" onclick="openCart()"><i class="bi bi-cart2"></i></a>
+        <a href="http://t.me/TastyGoTelegramBot"><i class="bi bi-telegram"></i></a>
+        <a href="{% url 'profile' %}"><img src="{{ MEDIA_URL }}{{ logo.image.url }}"></a>
+    </div>
+
+{% endblock %}
+

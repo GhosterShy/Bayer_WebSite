@@ -1,0 +1,111 @@
+{% load static %}
+{% csrf_token %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script src="{% static 'htmx.min.js' %}" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/project01media.css' %}">
+    <link rel="stylesheet" href="{% static 'css/seller.css' %}">
+    <title>Seller</title>
+</head>
+
+
+<body class="body-seller">
+    <div class="header-seller">
+        <div class="logo-seller"><a href="#">BAYER</a></div>
+        <div class="nav-seller">
+            <a href="#"><img src="{{ MEDIA_URL }}{{logo.image.url}}"></a>
+        </div>
+    </div>
+    <div class="main-seller">
+        <div class="banner-seller">
+            <a href="{% url 'add_product' %}"><div>Добавить товар</div></a>
+            <a href="#" id="openMyOrders"><div>Заказы</div></a>
+        </div>
+    </div>
+
+
+
+    <div id="myOrders" class="my-orders">
+        <div class="orders-content">
+            <span class="close-my-orders">&times;</span>
+            <h2>Мой заказы</h2>
+            <div>
+
+                <div class="accordion">
+
+                    {% for order in order_items %}
+                    <div class="accordion-item">
+                        <button class="accordion-header">Клиент {{ order.order.user }}</button>
+                        <div class="accordion-content">
+                            <span>
+                                <span>Продукт</span>
+                                <span>{{ order.product.name }}</span>
+                            </span>
+                            <span>
+                                <span>Количество</span>
+                                <span>{{ order.quantity }}</span>
+                            </span>
+                            <span>
+                                <span>Метод оплаты</span>
+                                <span>{{ order.order.payment_method }}</span>
+                            </span>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="my-product-title">Мой продукты</div>
+    <div class="my-product-tabs">
+
+
+        <div class="tab-buttons">
+        {% for category in categories %}
+            <button class="tab-button active" onclick="openTab(event, '{{ category.id }}')">{{ category.name }}</button>
+        {% endfor %}
+        </div>
+
+
+
+ {% for category, products in products_by_category.items %}
+        <div id="{{ category.id }}" class="tab-content">
+        {% for product in products %}
+            <div class="product-seller" onclick="productInCart()">
+                <div class="product-img-seller"><img src="{{ MEDIA_URL }}{{ product.image.url }}"></div>
+                <div class="product-body-seller">
+                    <span class="product-title-seller">{{ product.name }}</span>
+                    <div>
+                        <span>{{ product.price }}<span>&nbsp;₸</span></span>
+                        <span>{{ product.quantity }}кг</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+        </div>
+    {% endfor %}
+
+        <div id="tab3" class="tab-content">
+
+        </div>
+        <div id="tab4" class="tab-content">
+
+        </div>
+    </div>
+</body>
+<script src="{% static 'javascript/seller.js' %}"></script>
+</html>

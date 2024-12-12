@@ -1,0 +1,38 @@
+{% extends 'Seller/SellerBase.html' %}
+{% load static %}
+{% block content %}
+<main class="container">
+
+        <div class="d-flex bg-warning  justify-content-start gap-5  p-4 rounded">
+            <a style="background-color: #949EFF;color: black" href="{% url 'add_product' %}" class="p-4 rounded">Добавить товар</a>
+            <a style="background-color: #949EFF;color: black"  href="{% url 'orders' %}" class=" p-4 rounded">Заказы</a>
+        </div>
+
+
+
+        <h2 class="my-4">Мой продукты</h2>
+         {% for category, products in products_by_category.items %}
+
+        <h3 class="mb-3 bg-warning p-1 rounded">{{ category.name}}</h3>
+        <div class="row row-gap-4">
+            {% for product in products %}
+            <div class="col-md-3">
+                <div class="card">
+                    <img class="card-img-top" src="{{ MEDIA_URL }}{{ product.image.url }}" alt="{{ product.name }}" />
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ product.name }}</h5>
+                        <span>Количество:</span>
+                        <span class="fw-bold">143 <span>кг</span></span>
+                    </div>
+                </div>
+            </div>
+                {% endfor %}
+
+
+        </div>
+        {% endfor %}
+
+
+    </main>
+
+{% endblock %}
